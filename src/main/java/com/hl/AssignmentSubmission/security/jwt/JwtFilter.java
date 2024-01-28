@@ -40,9 +40,9 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
+        token = header.split(" ")[1].trim();
         username = jwtUtil.extractUsername(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        token = header.split(" ")[1].trim();
         if(!jwtUtil.validateToken(token, userDetails)) {
             filterChain.doFilter(request, response);
             return;
