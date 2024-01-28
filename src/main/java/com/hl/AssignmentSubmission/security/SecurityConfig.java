@@ -35,6 +35,7 @@ public class SecurityConfig {
                .csrf(AbstractHttpConfigurer::disable)
                .authorizeHttpRequests(authorize -> {
                     authorize
+                            .requestMatchers("/api/v1/auth/**").permitAll()
                             .anyRequest().authenticated();
                 })
                .httpBasic(Customizer.withDefaults())
@@ -43,7 +44,6 @@ public class SecurityConfig {
                    session
                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                })
-               //.exceptionHandling()
                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                .build();
     }
